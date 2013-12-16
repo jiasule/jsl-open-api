@@ -1,4 +1,5 @@
-open-api
+jsl-open-api
 ========
+API申请参考: http://jiasule.baidu.com/open/
 
-Open api for managing sites in jiasule
+[API文档](jsl-open-api.md)
