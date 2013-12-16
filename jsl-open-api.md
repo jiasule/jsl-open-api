@@ -18,7 +18,7 @@ api域名： `jiasule.baidu.com`
 所有的api的请求都要带上认证信息。
 
 ### Basic Auth密码生成样例（`Python`）
-
+```python
 	import hmac
 	import hashlib
 	import urllib
@@ -47,9 +47,10 @@ api域名： `jiasule.baidu.com`
 
 	secret_key = 'XXXXXXXXXXXXXXXXXXXX'   # secret_key 由加速乐提供
 	token = make_signiture_token(secret_key, param_dict)
+```
 
 ### Basic Auth使用示例（`Python`）
-
+```python
 	import urllib2
 	import base64
 
@@ -66,7 +67,7 @@ api域名： `jiasule.baidu.com`
 	header = get_header(username, token) #此处username为加速乐提供，token即为上方样例所生成
 	req = urllib2.Request(url, data, headers=header)
 	result = urllib2.urlopen(req).read()
-
+```
 
 ## 添加、修改网站配置
 * api地址：`/api/site/upsert/`
@@ -106,7 +107,7 @@ api域名： `jiasule.baidu.com`
 	cdn.directory=true&cdn.html=true&cdn.index=false&cdn.static=true&cdn.waf=true&domain=notsobad.me&email=root%40notsobad.me&host=www&ip=124.2.3.4&isp=0&time=1386903539&uniq_id=1234&use_cdn=true
 
 响应样例
-	
+```javascript
 	{
 		'status': 'ok',
 		'code' : 0,
@@ -116,7 +117,7 @@ api域名： `jiasule.baidu.com`
 			'cname' : '28d4198464a841e6.cdn.jiashule.com',
 		}
 	}
-	
+```	
 	
 
 ## 删除网站配置
@@ -143,13 +144,13 @@ api域名： `jiasule.baidu.com`
 	domain=notsobad.me&host=www&isp=0&time=1386904356
 
 响应数据样例
-	
+```javascript	
 	{
 		"code" : 0,
 		"status" : "ok",
 		"msg": "",
 	}
-
+```
 ## 网站列表
 * api地址: `/api/site/list/`
 * method : `post`
@@ -167,7 +168,7 @@ api域名： `jiasule.baidu.com`
 
 
 响应样例
-
+```javascript
 	{
 		"code" : 0,
 		"status" : "ok",
@@ -200,7 +201,7 @@ api域名： `jiasule.baidu.com`
 			}
 		] 
 	}
-	
+```	
 
 ## 清除缓存
 * api地址: `/api/site/purge/`
@@ -219,8 +220,9 @@ api域名： `jiasule.baidu.com`
 	
 	
 响应数据样例
-	
+```javascript	
 	{
 		"code" : 0,
 		"msg" : "ok"
 	}
+```
