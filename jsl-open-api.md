@@ -42,7 +42,7 @@ api域名： `jiasule.baidu.com`
 
 	def make_signiture_token(secret_key, param_dict):
 		param_string = get_sorted_param_string(param_dict)
-		hashed = hamc.new(secret_key, param_string, hashlib.sha1)
+		hashed = hmac.new(secret_key, param_string, hashlib.sha1)
 		return hashed.hexdigest()
 
 	secret_key = 'XXXXXXXXXXXXXXXXXXXX'   # secret_key 由加速乐提供
