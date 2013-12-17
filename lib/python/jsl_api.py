@@ -34,7 +34,7 @@ param_dict = {
 		("time", time),
 		],
 	"list": [
-		("domain", domain),
+		#("domain", domain),
 		#("host", host),
 		("time", time),
 		],
@@ -51,28 +51,26 @@ param_dict = {
 		],
 	}
 url = "http://jiasule.baidu.com/api/site/%s/"
-def get_header(user, token):
-	header = {}
-	b64string = b64encode('%s:%s' % (user, token))
-	header['AUTHORIZATION'] = 'Basic %s' % b64string
-	return header
 
-def make_signature(secret_key, data):
-	hashed = hmac.new(secret_key, data, hashlib.sha1)
-	return hashed.hexdigest()
 
-def test(action):
-	if action not in param_dict:
-		print 'first arg should be one of ', param_dict.keys()
-		sys.exit(1)
-	user = API_KEYS.keys()[0]
-	secret_key = API_KEYS[user]
-	param = param_dict[action]
+def main(url, user, secret_key, param):
+	''' 发送POST请求主函数
+	'''
+
+	def get_header(user, token):
+		header = {}
+		b64string = b64encode('%s:%s' % (user, token))
+		header['AUTHORIZATION'] = 'Basic %s' % b64string
+		return header
+
+	def make_signature(secret_key, data):
+		hashed = hmac.new(secret_key, data, hashlib.sha1)
+		return hashed.hexdigest()
+
 	param.sort(key=lambda x: x[0])
 	data = urllib.urlencode(param)
 	signature = make_signature(secret_key, data)
 	header = get_header(user, signature)
-	print data
 	req = urllib2.Request(url % action, data, headers=header)
 	try:
 		res = urllib2.urlopen(req)
@@ -82,4 +80,12 @@ def test(action):
 		print e.read()
 
 if "__main__" == __name__:
-	test(sys.argv[1])
+	action = sys.argv[1]
+	if action not in param_dict:
+		print 'first arg should be one of ', param_dict.keys()
+		sys.exit(1)
+	post_url = url % action
+	user = API_KEYS.keys()[0]
+	secret_key = API_KEYS[user]
+	param = param_dic[action]
+	main(url, user, secret_key, param)
