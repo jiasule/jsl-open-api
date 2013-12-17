@@ -19,28 +19,33 @@ api域名： `jiasule.baidu.com`
 
 ### 请求样例:
 
-curl:
-
+```bash
 	curl -u <user_id>:<signature> -d '<data>' <url>
-	// 字段解释：
-	// user_id: 加速乐所提供给用户的API用户id，为24位长度的uuid
-	// signature: 通过加速乐提供的密钥(64位长度)将当次发送的data进行签名获得的结果(40位长度)
-	// data: 当次发送的全部post数据
-	// url: 各个API接口对因url地址
-
+	# 字段解释：
+	# user_id: 加速乐所提供给用户的API用户id，为24位长度的uuid
+	# signature: 通过加速乐提供的密钥(64位长度)将当次发送的data进行签名获得的结果(40位长度)
+	# data: 当次发送的全部post数据
+	# url: 各个API接口对因url地址
+```
 示例:
 
 假设用户名为 `525d5bc0bf9efd2aca7fdd80`
 
 密钥为 `ruWq5T7FKq1g1VayLhtIqFWiCdiLKfopnAfpNOMi6evGaxxmgO6azgMhqqi6Im2`
 
-需要post的数据为: `cdn.directory=true&cdn.html=true&cdn.index=false&cdn.static=true&cdn.waf=true&domain=jiasule.com&email=test@jiasule.com&host=@&ip=1.2.3.4&isp=0&time=1387262828&use_cdn=true`
+需要post的数据为: 
+```
+cdn.directory=true&cdn.html=true&cdn.index=false&cdn.static=true&cdn.waf=true&domain=jiasule.com&email=test@jiasule.com&host=@&ip=1.2.3.4&isp=0&time=1387262828&use_cdn=true
+```
 
 计算后的签名为: `0d7f48ce822991e77933a51fa2ffb762e6c859a9`
 
-目的是更新站点， 即url为 `http://jiasule.baidu.com/api/site/upsert`
-
-	curl -u 525d5bc0bf9efd2aca7fdd80:0d7f48ce822991e77933a51fa2ffb762e6c859a9 -d 'cdn.directory=true&cdn.html=true&cdn.index=false&cdn.static=true&cdn.waf=true&domain=jiasule.com&email=test@jiasule.com&host=@&ip=1.2.3.4&isp=0&time=1387262828&use_cdn=true'
+用curl操作如下：
+```bash
+curl -u 525d5bc0bf9efd2aca7fdd80:0d7f48ce822991e77933a51fa2ffb762e6c859a9 \
+	-d 'cdn.directory=true&cdn.html=true&cdn.index=false&cdn.static=true&cdn.waf=true&domain=jiasule.com&email=test@jiasule.com&host=@&ip=1.2.3.4&isp=0&time=1387262828&use_cdn=true' \
+	http://jiasule.baidu.com/api/site/upsert/
+```
 
 如果一切正常，将返回如下结构的数据
 ```javascript
