@@ -53,31 +53,40 @@ param_dict = {
 url = "http://jiasule.baidu.com/api/site/%s/"
 
 
+def init_header(user, token):
+	header = {}
+	b64string = b64encode('%s:%s' % (user, token))
+	header['AUTHORIZATION'] = 'Basic %s' % b64string
+	return header
+
+def make_signature(secret_key, data):
+	hashed = hmac.new(secret_key, data, hashlib.sha1)
+	return hashed.hexdigest()
+
+def make_sorted_param_string(param):
+	''' 将参数排序并序列化为字符串
+	'''
+	if isinstance(param, dict):
+		param = param.items()
+	param.sort(key=lambda x: x[0])
+	data = urllib.urlencode(param)
+	return data
+
 def main(url, user, secret_key, param):
 	''' 发送POST请求主函数
 	'''
-
-	def get_header(user, token):
-		header = {}
-		b64string = b64encode('%s:%s' % (user, token))
-		header['AUTHORIZATION'] = 'Basic %s' % b64string
-		return header
-
-	def make_signature(secret_key, data):
-		hashed = hmac.new(secret_key, data, hashlib.sha1)
-		return hashed.hexdigest()
-
-	param.sort(key=lambda x: x[0])
-	data = urllib.urlencode(param)
+	data = make_sorted_param_string(param)
 	signature = make_signature(secret_key, data)
-	header = get_header(user, signature)
-	req = urllib2.Request(url % action, data, headers=header)
+	header = init_header(user, signature)
+	print data
+	req = urllib2.Request(url, data, headers=header)
 	try:
 		res = urllib2.urlopen(req)
 		print res.read()
 	except urllib2.HTTPError as e:
 		traceback.print_exc()
 		print e.read()
+
 
 if "__main__" == __name__:
 	action = sys.argv[1]
@@ -88,4 +97,4 @@ if "__main__" == __name__:
 	user = API_KEYS.keys()[0]
 	secret_key = API_KEYS[user]
 	param = param_dic[action]
-	main(url, user, secret_key, param)
+	main(post_url, user, secret_key, param)
