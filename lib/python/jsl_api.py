@@ -1,34 +1,85 @@
-#coding=utf8
+#!/usr/bin/env python
+# coding: utf-8
+import datetime
 import hmac
 import hashlib
-import urllib
-import datetime
+import sys
+import traceback
 import urllib2
-import base64
+import urllib
+from base64 import b64encode, b64decode
 
-param_dict = { 
-	# 假设参数
-	'param_a': 'a',
-	'param_b': 'b',
-	'time': datetime.datetime.now().strftime('%s'), # 均需要添加时间戳
-}  
 
-def get_sorted_param_string(param_dict):
-	''' 输入： 参数字典
-		输出： 排序后的参数字符串
-	'''
-	item_list = param_dict.items()
-	item_list.sort(key=lambda x:x[0])
-	param_string = urllib.urlencode(item_list)
-	return param_string
+API_KEYS = {
+	'51e4c1a18d2a7d10c4841c57': 'JruWq5T7FKq1g1VayLhtIqFWiCdiLKfopnAfpNOMi6evGaxxmgO6azgMhqqi6Im2',
+		}
 
-def make_signiture_token(secret_key, param_dict):
-	param_string = get_sorted_param_string(param_dict)
-	hashed = hmac.new(secret_key, param_string, hashlib.sha1)
+domain = 'test.com'
+host = '@'
+isp = '0'
+time = datetime.datetime.now().strftime('%s')
+param_dict = {
+	"upsert": [
+		("domain", domain),
+		("host", host),
+		("ip", "1.2.3.4"),
+		("isp", isp),
+		("email", "test@test.com"),
+		("use_cdn", "true"),
+		("cdn.waf", "true"),
+		("cdn.static", "true"),
+		("cdn.html", "true"),
+		("cdn.index", "false"),
+		("cdn.directory", "true"),
+		("time", time),
+		],
+	"list": [
+		("domain", domain),
+		#("host", host),
+		("time", time),
+		],
+	"del": [
+		("domain", domain),
+		("host", host),
+		("isp", isp),
+		("time", time),
+		],
+	"purge": [
+		("domain", domain),
+		("host", host),
+		("time", time),
+		],
+	}
+url = "http://jiasule.baidu.com/api/site/%s/"
+def get_header(user, token):
+	header = {}
+	b64string = b64encode('%s:%s' % (user, token))
+	header['AUTHORIZATION'] = 'Basic %s' % b64string
+	return header
+
+def make_signature(secret_key, data):
+	hashed = hmac.new(secret_key, data, hashlib.sha1)
 	return hashed.hexdigest()
 
-if __name__ == '__main__':
-	user_id = '111111111111'
-	secret_key = 'XXXXXXXXXXXXXXXXXXXX'   # secret_key 由加速乐提供
-	token = make_signiture_token(secret_key, param_dict)
-	print token
+def test(action):
+	if action not in param_dict:
+		print 'first arg should be one of ', param_dict.keys()
+		sys.exit(1)
+	user = API_KEYS.keys()[0]
+	secret_key = API_KEYS[user]
+	param = param_dict[action]
+	param.sort(key=lambda x: x[0])
+	data = urllib.urlencode(param)
+	signature = make_signature(secret_key, data)
+	header = get_header(user, signature)
+	print data
+	req = urllib2.Request(url % action, data, headers=header)
+	try:
+		res = urllib2.urlopen(req)
+		print res.read()
+	except urllib2.HTTPError as e:
+		traceback.print_exc()
+		print e.read()
+
+if "__main__" == __name__:
+	test(sys.argv[1])
