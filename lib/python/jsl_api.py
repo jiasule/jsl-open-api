@@ -70,7 +70,7 @@ def make_sorted_param_string(param):
 		param = param.items()
 	param.sort(key=lambda x: x[0])
 	data = urllib.urlencode(param)
-	return data
+	return urllib.unquote(data)
 
 def main(url, user, secret_key, param):
 	''' 发送POST请求主函数
