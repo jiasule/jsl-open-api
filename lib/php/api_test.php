@@ -1,6 +1,7 @@
 <?php
 function make_signiture($secret_key,$data) {
 	$param_strings = http_build_query($data);
+	$param_strings = urldecode($param_strings);
 	$hash = hash_hmac('sha1', $param_strings, $secret_key);
 	return $hash;
 }
