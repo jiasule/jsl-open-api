@@ -29,21 +29,23 @@ api域名： `jiasule.baidu.com`
 ```
 示例:
 
-假设用户名为 `525d5bc0bf9efd2aca7fdd80`
+假设用户名为 `51e4c1a18d2a7d10c4841c57`
 
-密钥为 `ruWq5T7FKq1g1VayLhtIqFWiCdiLKfopnAfpNOMi6evGaxxmgO6azgMhqqi6Im2`
+密钥为 `JruWq5T7FKq1g1VayLhtIqFWiCdiLKfopnAfpNOMi6evGaxxmgO6azgMhqqi6Im2`
 
-需要post的数据为: 
+需要post的数据为:
 ```
-cdn.directory=true&cdn.html=true&cdn.index=false&cdn.static=true&cdn.waf=true&domain=jiasule.com&email=test@jiasule.com&host=@&ip=1.2.3.4&isp=0&time=1387262828&use_cdn=true
+cdn.directory=true&cdn.html=true&cdn.index=false&cdn.static=true&cdn.waf=true&domain=notsobad.me&email=test@jiasule.com&host=@&ip=1.2.3.4&isp=0&time=1387430886&use_cdn=true
 ```
 
-计算后的签名为: `0d7f48ce822991e77933a51fa2ffb762e6c859a9`
+计算后的签名为: `8b7ca20e07374c8b5df5913f76e5097b8bbc3832`
+
+目的是更新站点， 即url为 `http://jiasule.baidu.com/api/site/upsert`
 
 用curl操作如下：
 ```bash
-curl -u 525d5bc0bf9efd2aca7fdd80:0d7f48ce822991e77933a51fa2ffb762e6c859a9 \
-	-d 'cdn.directory=true&cdn.html=true&cdn.index=false&cdn.static=true&cdn.waf=true&domain=jiasule.com&email=test@jiasule.com&host=@&ip=1.2.3.4&isp=0&time=1387262828&use_cdn=true' \
+curl -u 51e4c1a18d2a7d10c4841c57:8b7ca20e07374c8b5df5913f76e5097b8bbc3832 \
+	-d 'cdn.directory=true&cdn.html=true&cdn.index=false&cdn.static=true&cdn.waf=true&domain=notsobad.me&email=test@jiasule.com&host=@&ip=1.2.3.4&isp=0&time=1387430886&use_cdn=true'  \
 	http://jiasule.baidu.com/api/site/upsert/
 ```
 
