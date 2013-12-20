@@ -5,7 +5,7 @@ api域名： `jiasule.baidu.com`
 ## 认证
 使用`BASIC AUTH`认证。
 
-加速乐将提供帐号以及用于生成密码的随机字符串密钥。
+加速乐将提供APP_ID以及用于生成密码的SECRET_KEY。
 
 密码产生方式：
 
@@ -162,6 +162,7 @@ curl -u 51e4c1a18d2a7d10c4841c57:8b7ca20e07374c8b5df5913f76e5097b8bbc3832 \
 
 * domain （可以为空）
 * host (可以为空)
+* time
 
 请求样例: 
 
@@ -215,6 +216,7 @@ curl -u 51e4c1a18d2a7d10c4841c57:8b7ca20e07374c8b5df5913f76e5097b8bbc3832 \
 
 * domain
 * host (可以为空,为空时则清空整域缓存)
+* time
 
 
 请求数据样例
