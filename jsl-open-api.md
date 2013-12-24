@@ -72,6 +72,40 @@ curl -u 51e4c1a18d2a7d10c4841c57:8b7ca20e07374c8b5df5913f76e5097b8bbc3832 \
 	'Autherize failed.'							# 签名错误，签名匹配失败
 	'API Error: uncatched error.'				# 未捕获错误
 
+如请求失败，将会返回如下结构的json数据
+```javascript
+	{
+		"status": "fail",
+		"msg": "Upsert Error: The same sub-domain scan only add five single isp line records.",
+		"code": 1,
+		"error_code": 81002
+	}
+```
+
+其中code取值为：
+
+ * 1: 提交数据校验失败
+   * 此时msg为英文提示，专门提供error_code作为API用户二次开发时的映射key。
+ * 2-N: 提交数据与现有数据冲突，各功能自有校验器校验失败
+   * 此时msg为中文提示，error_code取值为0
+
+error_code目前取值范围以及代表信息如下:
+```javascript
+ERROR_CODE = {
+		81001: 'Upsert Error: Please add default isp line first.',
+		81002: 'Upsert Error: The same sub-domain can only add five single isp line records.',
+		81003: 'Upsert Error: System Error, Please try again.',
+		82001: 'Delete Error: Invalid isp code.',
+		82002: 'Delete Error: Requires valid domain.',
+		82003: 'Delete Error: No such host.',
+		82004: 'Delete Error: No such isp.',
+		83001: 'List Error: No site found under current conditions.',
+		84001: 'Purge Error: Requires domain.',
+		84002: 'Purge Error: You do not have site in this domain.',
+		84003: 'Purge Error: No such host.'
+		}
+```
+
 ## 添加、修改网站配置
 * api地址：`/api/site/upsert/`
 * method : `post`
