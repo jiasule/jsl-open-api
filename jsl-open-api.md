@@ -185,7 +185,7 @@ ERROR_CODE = {
 	{
 		"code" : 0,
 		"status" : "ok",
-		"msg": "",
+		"msg": ""
 	}
 ```
 ## 网站列表
