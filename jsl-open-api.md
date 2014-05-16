@@ -1,6 +1,6 @@
 #加速乐开放API
 
-api域名： `jiasule.baidu.com`
+api域名： `www.jiasule.com`
 
 ## 认证
 使用`BASIC AUTH`认证。

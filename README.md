@@ -4,5 +4,5 @@ jsl-open-api
 
 
 * [API文档](jsl-open-api.md)
-* [API申请方法](http://jiasule.baidu.com/open/)
+* [API申请方法](http://www.jiasule.com/open/)
 
