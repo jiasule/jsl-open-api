@@ -261,8 +261,8 @@ ERROR_CODE = {
 
 请求数据样例
 	
-	domain=notsobad.me&type=url&urls=http://www.notsobad.me/
-	
+	domain=notsobad.me&type=url&urls=http%3A%2F%2Fwww.notsobad.me%0Ahttp%3A%2F%2Fbbs.notsobad.me%2F%3Fa%3D1
+	domain=notsobad.me&type=host&urls=http%3A%2F%2Fwww.notsobad.me%0Ahttp%3A%2F%2bbs.notsobad.me
 	
 响应数据样例
 ```javascript	
