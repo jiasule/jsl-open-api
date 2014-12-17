@@ -101,8 +101,13 @@ ERROR_CODE = {
 		82004: 'Delete Error: No such isp.',
 		83001: 'List Error: No site found under current conditions.',
 		84001: 'Purge Error: Requires domain.',
-		84002: 'Purge Error: You do not have site in this domain.',
-		84003: 'Purge Error: No such host.'
+		84002: 'Purge Error: Requires urls',
+        	84003: 'Purge Error: Requires type',
+        	84004: 'Purge Error: No such domain.',
+        	84005: 'Purge Error: Urls max count is 10',
+        	84006: 'Purge Error: Urls format invalid',
+        	84007: 'Purge Error: Urls host not exist',
+        	84008: 'Purge Error: Type invalid',
 		}
 ```
 
@@ -249,14 +254,15 @@ ERROR_CODE = {
 请求参数：
 
 * domain
-* host (可以为空,为空时则清空整域缓存)
+* type (必填，可选host和url，url为刷新网址缓存，host为刷新子域名缓存)
+* urls（必填，多条记录以\n分隔，必须为完整的url格式，如http://www.notsobad.me/?a=1）
 * time
 
 
 请求数据样例
 	
-	domain=notsobad.me&host=www
-	
+	domain=notsobad.me&type=url&urls=http%3A%2F%2Fwww.notsobad.me%0Ahttp%3A%2F%2Fbbs.notsobad.me%2F%3Fa%3D1
+	domain=notsobad.me&type=host&urls=http%3A%2F%2Fwww.notsobad.me%0Ahttp%3A%2F%2bbs.notsobad.me
 	
 响应数据样例
 ```javascript	
