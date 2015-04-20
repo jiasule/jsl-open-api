@@ -50,7 +50,7 @@ param_dict = {
 		("time", time),
 		],
 	}
-url = "http://www.jiasule.com/api/site/%s/"
+url = "https://www.jiasule.com/api/site/%s/"
 
 
 def init_header(user, token):

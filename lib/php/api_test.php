@@ -37,7 +37,7 @@ $action = 'list';
 // 开放API主要信息，以下信息由加速乐提供.
 $API_INFO = array(
     // API接口地址
-    'url' => 'http://www.jiasule.com/api/site/'.$action.'/', 
+    'url' => 'https://www.jiasule.com/api/site/'.$action.'/', 
     // 认证用户名
     'user' => 'xxxxxxxxxxxxxxx', 
     // 认证密钥
