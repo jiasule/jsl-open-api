@@ -92,22 +92,30 @@ curl -u 51e4c1a18d2a7d10c4841c57:8b7ca20e07374c8b5df5913f76e5097b8bbc3832 \
 error_code目前取值范围以及代表信息如下:
 ```javascript
 ERROR_CODE = {
-		81001: 'Upsert Error: Please add default isp line first.',
-		81002: 'Upsert Error: The same sub-domain can only add five single isp line records.',
-		81003: 'Upsert Error: System Error, Please try again.',
-		82001: 'Delete Error: Invalid isp code.',
-		82002: 'Delete Error: Requires valid domain.',
-		82003: 'Delete Error: No such host.',
-		82004: 'Delete Error: No such isp.',
-		83001: 'List Error: No site found under current conditions.',
-		84001: 'Purge Error: Requires domain.',
-		84002: 'Purge Error: Requires urls',
-        	84003: 'Purge Error: Requires type',
-        	84004: 'Purge Error: No such domain.',
-        	84005: 'Purge Error: Urls max count is 10',
-        	84006: 'Purge Error: Urls format invalid',
-        	84007: 'Purge Error: Urls host not exist',
-        	84008: 'Purge Error: Type invalid',
+		81001: 'Please add default isp line first.',
+		81002: 'The same sub-domain can only add five single isp line records.',
+		81003: 'System Error, Please try again.',                               
+		81004: 'Site invalid.',
+		81005: 'Dns invalid.', 
+		81006: 'IP invalid.',
+		81007: 'Site has no ICP.',
+		81008: 'Dns duplicated.', 
+		81009: 'Host invalid.',                                                 
+		82001: 'Invalid isp code.',                                        
+		82002: 'Requires valid domain.',                                      
+		82003: 'No such host.',                                            
+		82004: 'No such isp.',                                             
+		82005: 'Dns invalid.',                                             
+		82006: 'Please delete other isp line record first,then delete default isp line.',
+		83001: 'No site found under current conditions.',                      
+		84001: 'Requires domain.',                                             
+		84002: 'Requires urls',                                               
+		84003: 'Requires type',                                               
+		84004: 'No such domain.',                                               
+		84005: 'Urls max count is 10',                                         
+		84006: 'Urls format invalid',                                           
+		84007: 'Urls host not exist',                                           
+		84008: 'Type invalid',
 		}
 ```
 
@@ -143,6 +151,9 @@ ERROR_CODE = {
 	* 是否开启首页缓存
 * cdn.directory
 	* 是否开启目录缓存
+* id (可选)
+	* 网站ID
+	* 更新指定网站配置
 	
 请求数据样例
 
@@ -176,6 +187,9 @@ ERROR_CODE = {
 * isp（可选）
 	* 待删除的isp节点
 	* 取值范围 `[0, 1, 2, 3] #0: 默认, 1: 联通, 2: 电信, 3:移动`
+* id (可选)
+	* 网站ID
+	* 删除指定网站配置
 * time
 	* 时间戳
 
@@ -202,7 +216,12 @@ ERROR_CODE = {
 * domain （可以为空）
 * host (可以为空)
 * time
-
+* page (可选)
+	* 页数
+	* 分页查询，默认为1
+* pagesize (可选)
+	* 分页条数
+	* 默认查询所有
 请求样例: 
 
 * `/api/site/list/`
