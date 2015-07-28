@@ -56,6 +56,7 @@ curl -u 51e4c1a18d2a7d10c4841c57:8b7ca20e07374c8b5df5913f76e5097b8bbc3832 \
 		"code": 0,
 		"msg": "added",
 		"ret": {
+		        "id": "4efdf26715303446a6000001",
 			"cname": "9ece8c8f521f6aac.cdn.jiashule.com.",
 			"site": "@.jiasule.com",
 			"isp": 0
@@ -157,7 +158,7 @@ ERROR_CODE = {
 	
 请求数据样例
 
-	cdn.directory=true&cdn.html=true&cdn.index=false&cdn.static=true&cdn.waf=true&domain=notsobad.me&email=root%40notsobad.me&host=www&ip=124.2.3.4&isp=0&time=1386903539&uniq_id=1234&use_cdn=true
+	cdn.directory=true&cdn.html=true&cdn.index=false&cdn.static=true&cdn.waf=true&domain=notsobad.me&host=www&ip=124.2.3.4&isp=0&time=1386903539&use_cdn=true
 
 响应样例
 ```javascript
@@ -166,8 +167,10 @@ ERROR_CODE = {
 		'code' : 0,
 		'msg' : 'added',
 		'ret' : {
+			'id' : '4efdf26715303446a6000001',	
 			'site' : 'www.notsobad.me',
 			'cname' : '28d4198464a841e6.cdn.jiashule.com',
+			'isp' : 0,
 		}
 	}
 ```	
@@ -227,6 +230,7 @@ ERROR_CODE = {
 * `/api/site/list/`
 * `/api/site/list/?domain=notsobad.me`
 * `/api/site/list/?domain=notsobad.me&host=www`
+* `/api/site/list/?domain=notsobad.me&pagesize=20&page=1`
 
 
 响应样例
@@ -239,9 +243,8 @@ ERROR_CODE = {
 				'domain' : 'notsobad.me',
 				'host' : 'www',
 				'ip' : ['124.2.3.4'],
-				'email' : 'root@notsobad.me',
 				'use_cdn' : true,
-				'uniq_id' : 1234,
+				'id' : 1234,
 				'cdn.waf' : true,
 				'cdn.static' : true,
 				'cdn.html' : true,
@@ -252,9 +255,8 @@ ERROR_CODE = {
 				'domain' : 'notsobad.me',
 				'host' : 'bbs',
 				'ip' : ['124.2.3.4'],
-				'email' : 'root@notsobad.me',
 				'use_cdn' : true,
-				'uniq_id' : 1234,
+				'id' : 1234,
 				'cdn.waf' : true,
 				'cdn.static' : true,
 				'cdn.html' : true,
