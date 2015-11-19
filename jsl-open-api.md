@@ -94,28 +94,29 @@ error_code目前取值范围以及代表信息如下:
 ERROR_CODE = {
 		81001: 'Please add default isp line first.',
 		81002: 'The same sub-domain can only add five single isp line records.',
-		81003: 'System Error, Please try again.',                               
+		81003: 'System Error, Please try again.',
 		81004: 'Site invalid.',
-		81005: 'Dns invalid.', 
+		81005: 'Dns invalid.',
 		81006: 'IP invalid.',
 		81007: 'Site has no ICP.',
-		81008: 'Dns duplicated.', 
-		81009: 'Host invalid.',                                                 
-		82001: 'Invalid isp code.',                                        
-		82002: 'Requires valid domain.',                                      
-		82003: 'No such host.',                                            
-		82004: 'No such isp.',                                             
-		82005: 'Dns invalid.',                                             
+		81008: 'Dns duplicated.',
+		81009: 'Host invalid.',
+		82001: 'Invalid isp code.',
+		82002: 'Requires valid domain.',
+		82003: 'No such host.',
+		82004: 'No such isp.',
+		82005: 'Dns invalid.',
 		82006: 'Please delete other isp line record first,then delete default isp line.',
-		83001: 'No site found under current conditions.',                      
-		84001: 'Requires domain.',                                             
-		84002: 'Requires urls',                                               
-		84003: 'Requires type',                                               
-		84004: 'No such domain.',                                               
-		84005: 'Urls max count is 10',                                         
-		84006: 'Urls format invalid',                                           
-		84007: 'Urls host not exist',                                           
+		83001: 'No site found under current conditions.',
+		84001: 'Requires domain.',
+		84002: 'Requires urls',
+		84003: 'Requires type',
+		84004: 'No such domain.',
+		84005: 'Urls max count is 10',
+		84006: 'Urls format invalid',
+		84007: 'Urls host not exist',
 		84008: 'Type invalid',
+		85001: 'Require domain',
 		}
 ```
 
@@ -141,7 +142,7 @@ ERROR_CODE = {
 * use_cdn
 	* false，不使用cdn
 	* true, 使用cdn
-* cdn.waf 
+* cdn.waf
 	* 是否开启waf，true/false
 * cdn.static
 	* 是否开启静态资源缓存，true/false
@@ -154,7 +155,7 @@ ERROR_CODE = {
 * id (可选)
 	* 网站ID
 	* 更新指定网站配置
-	
+
 请求数据样例
 
 	cdn.directory=true&cdn.html=true&cdn.index=false&cdn.static=true&cdn.waf=true&domain=notsobad.me&email=root%40notsobad.me&host=www&ip=124.2.3.4&isp=0&time=1386903539&uniq_id=1234&use_cdn=true
@@ -170,8 +171,8 @@ ERROR_CODE = {
 			'cname' : '28d4198464a841e6.cdn.jiashule.com',
 		}
 	}
-```	
-	
+```
+
 
 ## 删除网站配置
 * api地址：`/api/site/del/`
@@ -181,7 +182,7 @@ ERROR_CODE = {
 请求参数说明：
 
 * domain
-	* 根域	
+	* 根域
 * host（可选）
 	* 待删除的子域名
 * isp（可选）
@@ -200,7 +201,7 @@ ERROR_CODE = {
 	domain=notsobad.me&host=www&isp=0&time=1386904356
 
 响应数据样例
-```javascript	
+```javascript
 	{
 		"code" : 0,
 		"status" : "ok",
@@ -222,7 +223,7 @@ ERROR_CODE = {
 * pagesize (可选)
 	* 分页条数
 	* 默认查询所有
-请求样例: 
+请求样例:
 
 * `/api/site/list/`
 * `/api/site/list/?domain=notsobad.me`
@@ -261,9 +262,9 @@ ERROR_CODE = {
 				'cdn.index' : false,
 				'cdn.directory' : false
 			}
-		] 
+		]
 	}
-```	
+```
 
 ## 清除缓存
 * api地址: `/api/site/purge/`
@@ -279,14 +280,34 @@ ERROR_CODE = {
 
 
 请求数据样例
-	
+
 	domain=notsobad.me&type=url&urls=http%3A%2F%2Fwww.notsobad.me%0Ahttp%3A%2F%2Fbbs.notsobad.me%2F%3Fa%3D1
 	domain=notsobad.me&type=host&urls=http%3A%2F%2Fwww.notsobad.me%0Ahttp%3A%2F%2bbs.notsobad.me
-	
+
 响应数据样例
-```javascript	
+```javascript
 	{
 		"code" : 0,
 		"msg" : "ok"
 	}
+```
+
+## 查看报表
+* api地址: `/api/site/report/`
+* method : `post`
+* data : json格式数据
+
+请求参数：
+
+* domain (根域名)
+* time
+
+
+请求数据样例
+
+    domain=notsobad.me&time=1386904356
+
+响应数据样例
+```html
+    <iframe src="https://www.jiasule.com/analytics/summary_report/?filter_site=notsobad.me&rd=8920&ts=1447918220&sig=c0b09316ffc9691aad1943a11a433a7f" width="1000" height="1000"></iframe>
 ```
