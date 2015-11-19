@@ -308,6 +308,13 @@ ERROR_CODE = {
     domain=notsobad.me&time=1386904356
 
 响应数据样例
-```html
-    <iframe src="https://www.jiasule.com/analytics/summary_report/?filter_site=notsobad.me&rd=8920&ts=1447918220&sig=c0b09316ffc9691aad1943a11a433a7f" width="1000" height="1000"></iframe>
+```javascript
+    {
+        "status": "ok",
+        "code": 0,
+        'msg' : 'report',
+		'ret' : {
+            "url": "https://www.jiasule.com/analytics/summary_report/?filter_site=notsobad.me&rd=l4udBU7ZNPeRo1bGhSYXLzv30CJHgw6D&ts=1447931428&sig=a6872eec8aafec2d695821401ffb89a59fd57ca3"
+		}
+    }
 ```
