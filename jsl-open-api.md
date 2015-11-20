@@ -117,6 +117,8 @@ ERROR_CODE = {
 		84006: 'Urls format invalid',                                           
 		84007: 'Urls host not exist',                                           
 		84008: 'Type invalid',
+		85001: 'Require domain',
+		85002: 'This domain do not belong to you.',
 		}
 ```
 
@@ -292,3 +294,30 @@ ERROR_CODE = {
 		"msg" : "ok"
 	}
 ```
+
+## 查看报表                                                                     
+* api地址: `/api/site/report/`                                                     
+* method : `post`                                                                  
+* data : json格式数据                                                              
+                                                                                   
+请求参数：                                                                         
+                                                                                   
+* domain (根域名)                                                                  
+* time                                                                             
+                                                                                   
+                                                                                   
+请求数据样例                                                                       
+                                                                                   
+    domain=notsobad.me&time=1386904356                                             
+                                                                                   
+响应数据样例                                                                       
+```javascript                                                                      
+    {                                                                              
+        "status": "ok",                                                            
+        "code": 0,                                                                 
+        'msg' : 'report',                                                          
+        'ret' : {                                                                  
+            "url": "https://www.jiasule.com/analytics/summary_report/?filter_site=notsobad.me&rd=l4udBU7ZNPeRo1bGhSYXLzv30CJHgw6D&ts=1447931428&sig=a6872eec8aafec2d695821401ffb89a59fd57ca3"
+        }                                                                       
+    }                                                                              
+``` 
