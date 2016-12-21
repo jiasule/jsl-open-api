@@ -1,6 +1,6 @@
 #加速乐开放API
 
-api域名： `www.jiasule.com`
+api域名： `www.yunaq.com`
 
 ## 认证
 使用`BASIC AUTH`认证。
@@ -40,13 +40,13 @@ cdn.directory=true&cdn.html=true&cdn.index=false&cdn.static=true&cdn.waf=true&do
 
 计算后的签名为: `8b7ca20e07374c8b5df5913f76e5097b8bbc3832`
 
-目的是更新站点， 即url为 `https://www.jiasule.com/api/site/upsert`
+目的是更新站点， 即url为 `https://www.yunaq.com/api/site/upsert`
 
 用curl操作如下：
 ```bash
 curl -u 51e4c1a18d2a7d10c4841c57:8b7ca20e07374c8b5df5913f76e5097b8bbc3832 \
 	-d 'cdn.directory=true&cdn.html=true&cdn.index=false&cdn.static=true&cdn.waf=true&domain=notsobad.me&email=test@jiasule.com&host=@&ip=1.2.3.4&isp=0&time=1387430886&use_cdn=true'  \
-	https://www.jiasule.com/api/site/upsert/
+	https://www.yunaq.com/api/site/upsert/
 ```
 
 如果一切正常，将返回如下结构的数据
@@ -317,7 +317,7 @@ ERROR_CODE = {
         "code": 0,                                                                 
         'msg' : 'report',                                                          
         'ret' : {                                                                  
-            "url": "https://www.jiasule.com/analytics/summary_report/?filter_site=notsobad.me&rd=l4udBU7ZNPeRo1bGhSYXLzv30CJHgw6D&ts=1447931428&sig=a6872eec8aafec2d695821401ffb89a59fd57ca3"
+            "url": "https://www.yunaq.com/analytics/summary_report/?filter_site=notsobad.me&rd=l4udBU7ZNPeRo1bGhSYXLzv30CJHgw6D&ts=1447931428&sig=a6872eec8aafec2d695821401ffb89a59fd57ca3"
         }                                                                       
     }                                                                              
 ``` 
