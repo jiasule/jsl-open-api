@@ -11,7 +11,7 @@ api域名： `www.yunaq.com`
 
 * 每次请求的密码均需要重新生成。
 * 密码由HMAC签名方式产生，hash方法为sha1，密钥由加速乐提供。
-	* 每个用户指定一个密钥，请严密保管。
+  * 每个用户指定一个密钥，请严密保管。
 * 所有POST参数均需要添加时间戳字段，单位为秒。 `"time": "1386800023"`
 * 生成签名的信息体为本次请求的全部POST数据，是所有key按照按照a-z的顺序排列的，以&符号连接的url参数字符串，**而不是json或其他格式**。
 
@@ -85,9 +85,9 @@ curl -u 51e4c1a18d2a7d10c4841c57:8b7ca20e07374c8b5df5913f76e5097b8bbc3832 \
 
 其中code取值为：
 
- * 1: 提交数据校验失败
+* 1: 提交数据校验失败
    * 此时msg为英文提示，专门提供error_code作为API用户二次开发时的映射key。
- * 2-N: 提交数据与现有数据冲突，各功能自有校验器校验失败
+* 2-N: 提交数据与现有数据冲突，各功能自有校验器校验失败
    * 此时msg为中文提示，error_code取值为0
 
 error_code目前取值范围以及代表信息如下:
@@ -119,6 +119,15 @@ ERROR_CODE = {
 		84008: 'Type invalid',
 		85001: 'Require domain',
 		85002: 'This domain do not belong to you.',
+
+        86001: 'No site found under current conditions.',
+        86002: "Malformed or invalid parameters",
+        86003: 'Unknown Error',
+        86004: 'Download url format error',
+        86005: 'Parameters [date] invalid',
+        86006: 'Parameters [log_type] invalid',
+        86007: 'Generate download url error',
+        86008: 'download link expired',
 		}
 ```
 
@@ -130,34 +139,34 @@ ERROR_CODE = {
 如果网站尚未添加，则会自动添加，否则修改对应记录。
 
 * doamin
-	* 根域
+  * 根域
 * host
-	* 子域名
+  * 子域名
 * ip
-	* 源站ip
+  * 源站ip
 * isp
-	* 使用的isp线路
-	* 取值范围 `[0, 1, 2, 3] #0: 默认, 1: 联通, 2: 电信, 3:移动`
+  * 使用的isp线路
+  * 取值范围 `[0, 1, 2, 3] #0: 默认, 1: 联通, 2: 电信, 3:移动`
 * time
-	* 当前时间戳
+  * 当前时间戳
 * email
 * use_cdn
-	* false，不使用cdn
-	* true, 使用cdn
+  * false，不使用cdn
+  * true, 使用cdn
 * cdn.waf 
-	* 是否开启waf，true/false
+  * 是否开启waf，true/false
 * cdn.static
-	* 是否开启静态资源缓存，true/false
+  * 是否开启静态资源缓存，true/false
 * cdn.html
-	* 是否开启html文件缓存, true/false
+  * 是否开启html文件缓存, true/false
 * cdn.index
-	* 是否开启首页缓存
+  * 是否开启首页缓存
 * cdn.directory
-	* 是否开启目录缓存
+  * 是否开启目录缓存
 * id (可选)
-	* 网站ID
-	* 更新指定网站配置
-	
+  * 网站ID
+  * 更新指定网站配置
+
 请求数据样例
 
 	cdn.directory=true&cdn.html=true&cdn.index=false&cdn.static=true&cdn.waf=true&domain=notsobad.me&host=www&ip=124.2.3.4&isp=0&time=1386903539&use_cdn=true
@@ -175,8 +184,8 @@ ERROR_CODE = {
 			'isp' : 0,
 		}
 	}
-```	
-	
+```
+
 
 ## 删除网站配置
 * api地址：`/api/site/del/`
@@ -186,17 +195,17 @@ ERROR_CODE = {
 请求参数说明：
 
 * domain
-	* 根域	
+  * 根域	
 * host（可选）
-	* 待删除的子域名
+  * 待删除的子域名
 * isp（可选）
-	* 待删除的isp节点
-	* 取值范围 `[0, 1, 2, 3] #0: 默认, 1: 联通, 2: 电信, 3:移动`
+  * 待删除的isp节点
+  * 取值范围 `[0, 1, 2, 3] #0: 默认, 1: 联通, 2: 电信, 3:移动`
 * id (可选)
-	* 网站ID
-	* 删除指定网站配置
+  * 网站ID
+  * 删除指定网站配置
 * time
-	* 时间戳
+  * 时间戳
 
 注意：当参数中无isp时会删除当前host下所有配置。同理，参数中无host时，则会删除整个domain下所有配置
 
@@ -222,12 +231,12 @@ ERROR_CODE = {
 * host (可以为空)
 * time
 * page (可选)
-	* 页数
-	* 分页查询，默认为1
+  * 页数
+  * 分页查询，默认为1
 * pagesize (可选)
-	* 分页条数
-	* 默认查询所有
-请求样例: 
+  * 分页条数
+  * 默认查询所有
+    请求样例: 
 
 * `/api/site/list/`
 * `/api/site/list/?domain=notsobad.me`
@@ -267,7 +276,7 @@ ERROR_CODE = {
 			}
 		] 
 	}
-```	
+```
 
 ## 清除缓存
 * api地址: `/api/site/purge/`
@@ -283,10 +292,10 @@ ERROR_CODE = {
 
 
 请求数据样例
-	
+​	
 	domain=notsobad.me&type=url&urls=http%3A%2F%2Fwww.notsobad.me%0Ahttp%3A%2F%2Fbbs.notsobad.me%2F%3Fa%3D1
 	domain=notsobad.me&type=host&urls=http%3A%2F%2Fwww.notsobad.me%0Ahttp%3A%2F%2bbs.notsobad.me
-	
+
 响应数据样例
 ```javascript	
 	{
@@ -299,17 +308,17 @@ ERROR_CODE = {
 * api地址: `/api/site/report/`                                                     
 * method : `post`                                                                  
 * data : json格式数据                                                              
-                                                                                   
+  ​                                                                                 
 请求参数：                                                                         
-                                                                                   
+​                                                                                   
 * domain (根域名)                                                                  
 * time                                                                             
-                                                                                   
-                                                                                   
+  ​                                                                                 
+  ​                                                                                 
 请求数据样例                                                                       
-                                                                                   
+​                                                                                   
     domain=notsobad.me&time=1386904356                                             
-                                                                                   
+
 响应数据样例                                                                       
 ```javascript                                                                      
     {                                                                              
@@ -320,4 +329,36 @@ ERROR_CODE = {
             "url": "https://www.yunaq.com/analytics/summary_report/?filter_site=notsobad.me&rd=l4udBU7ZNPeRo1bGhSYXLzv30CJHgw6D&ts=1447931428&sig=a6872eec8aafec2d695821401ffb89a59fd57ca3"
         }                                                                       
     }                                                                              
-``` 
+```
+
+## 获取日志下载链接
+
+* api地址：`/api/logs/download_url/`
+* method：`post`
+* data：json格式数据
+* 其他说明：日志下载支持以天为单位的日志和以小时为单位日志的下载。
+    * 以天为单位：支持最近7天（不包括请求当天）的日志。 如请求时间是2017-02-16，则可获取2017-02-09 至 2017-02-15这7天的日志
+    * 以小时为单位：支持26小时前至2小时前的日志。如请求时间是2017-02-16 14:02:00，则可获取2017-02-15 12 至 2017-02-16 12这24个小时的日志
+
+请求参数：
+  * log_type：必填参数，表示日志类型。支持参数列表：attack, access。
+  * date：必填，表示日志时间段。每日
+  * domain：必填。表示根域名。
+  * time
+
+请求数据样例：
+* 请求天日志下载url：`domain=notsobad.me&log_type=access&date=20170215&time=1487225235`
+* 请求小时日志下载url：`domain=notsobad.me&log_type=attack&date=2017021512&time=1487225235`
+
+响应数据样例：
+```javascript
+{
+    "status": "ok",
+    "code": 0,
+    "ret": {
+        "download_url": "xxxxxxxxxxxx" // 供下载日志的url
+    }
+}
+
+```
+
