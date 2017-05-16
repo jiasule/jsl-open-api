@@ -40,13 +40,13 @@ cdn.directory=true&cdn.html=true&cdn.index=false&cdn.static=true&cdn.waf=true&do
 
 计算后的签名为: `8b7ca20e07374c8b5df5913f76e5097b8bbc3832`
 
-目的是更新站点， 即url为 `https://www.yunaq.com/api/site/upsert`
+目的是更新站点， 即url为 `https://www.yunaq.com/api/v2/site/upsert`
 
 用curl操作如下：
 ```bash
 curl -u 51e4c1a18d2a7d10c4841c57:8b7ca20e07374c8b5df5913f76e5097b8bbc3832 \
 	-d 'cdn.directory=true&cdn.html=true&cdn.index=false&cdn.static=true&cdn.waf=true&domain=notsobad.me&email=test@jiasule.com&host=@&ip=1.2.3.4&isp=0&time=1387430886&use_cdn=true'  \
-	https://www.yunaq.com/api/site/upsert/
+	https://www.yunaq.com/api/v2/site/upsert/
 ```
 
 如果一切正常，将返回如下结构的数据
@@ -132,7 +132,7 @@ ERROR_CODE = {
 ```
 
 ## 添加、修改网站配置
-* api地址：`/api/site/upsert/`
+* api地址：`/api/v2/site/upsert/`
 * method : `post`
 * data : 请求参数
 
@@ -188,7 +188,7 @@ ERROR_CODE = {
 
 
 ## 删除网站配置
-* api地址：`/api/site/del/`
+* api地址：`/api/v2/site/del/`
 * method : `post`
 * data : 请求参数
 
@@ -222,7 +222,7 @@ ERROR_CODE = {
 	}
 ```
 ## 网站列表
-* api地址: `/api/site/list/`
+* api地址: `/api/v2/site/list/`
 * method : `post`
 
 请求参数：
@@ -238,10 +238,10 @@ ERROR_CODE = {
   * 默认查询所有
     请求样例: 
 
-* `/api/site/list/`
-* `/api/site/list/?domain=notsobad.me`
-* `/api/site/list/?domain=notsobad.me&host=www`
-* `/api/site/list/?domain=notsobad.me&pagesize=20&page=1`
+* `/api/v2/site/list/`
+* `/api/v2/site/list/?domain=notsobad.me`
+* `/api/v2/site/list/?domain=notsobad.me&host=www`
+* `/api/v2/site/list/?domain=notsobad.me&pagesize=20&page=1`
 
 
 响应样例
@@ -279,7 +279,7 @@ ERROR_CODE = {
 ```
 
 ## 清除缓存
-* api地址: `/api/site/purge/`
+* api地址: `/api/v2/site/purge/`
 * method : `post`
 * data : json格式数据
 
@@ -305,19 +305,17 @@ ERROR_CODE = {
 ```
 
 ## 查看报表                                                                     
-* api地址: `/api/site/report/`                                                     
+* api地址: `/api/v2/site/report/`                                                     
 * method : `post`                                                                  
-* data : json格式数据                                                              
-  ​                                                                                 
-请求参数：                                                                         
-​                                                                                   
+* data : json格式数据
+
+​请求参数：                                                                                   
+
 * domain (根域名)                                                                  
-* time                                                                             
-  ​                                                                                 
-  ​                                                                                 
-请求数据样例                                                                       
-​                                                                                   
-    domain=notsobad.me&time=1386904356                                             
+* time
+
+请求数据样例
+  domain=notsobad.me&time=1386904356                                             
 
 响应数据样例                                                                       
 ```javascript                                                                      
@@ -333,7 +331,7 @@ ERROR_CODE = {
 
 ## 获取日志下载链接
 
-* api地址：`/api/logs/download_url/`
+* api地址：`/api/v2/logs/download_url/`
 * method：`post`
 * data：json格式数据
 * 其他说明：日志下载支持以天为单位的日志和以小时为单位日志的下载。
@@ -341,10 +339,10 @@ ERROR_CODE = {
     * 以小时为单位：支持26小时前至2小时前的日志。如请求时间是2017-02-16 14:02:00，则可获取2017-02-15 12 至 2017-02-16 12这24个小时的日志
 
 请求参数：
-  * log_type：必填参数，表示日志类型。支持参数列表：attack, access。
-  * date：必填，表示日志时间段。每日
-  * domain：必填。表示根域名。
-  * time
+* log_type：必填参数，表示日志类型。支持参数列表：attack, access。
+* date：必填，表示日志时间段。每日
+* domain：必填。表示根域名。
+* time
 
 请求数据样例：
 * 请求天日志下载url：`domain=notsobad.me&log_type=access&date=20170215&time=1487225235`
