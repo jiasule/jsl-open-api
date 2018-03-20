@@ -93,32 +93,32 @@ curl -u 51e4c1a18d2a7d10c4841c57:8b7ca20e07374c8b5df5913f76e5097b8bbc3832 \
 error_code目前取值范围以及代表信息如下:
 ```javascript
 ERROR_CODE = {
-		81001: 'Please add default isp line first.',
-		81002: 'The same sub-domain can only add five single isp line records.',
-		81003: 'System Error, Please try again.',                               
-		81004: 'Site invalid.',
-		81005: 'Dns invalid.', 
-		81006: 'IP invalid.',
-		81007: 'Site has no ICP.',
-		81008: 'Dns duplicated.', 
-		81009: 'Host invalid.',                                                 
-		82001: 'Invalid isp code.',                                        
-		82002: 'Requires valid domain.',                                      
-		82003: 'No such host.',                                            
-		82004: 'No such isp.',                                             
-		82005: 'Dns invalid.',                                             
-		82006: 'Please delete other isp line record first,then delete default isp line.',
-		83001: 'No site found under current conditions.',                      
-		84001: 'Requires domain.',                                             
-		84002: 'Requires urls',                                               
-		84003: 'Requires type',                                               
-		84004: 'No such domain.',                                               
-		84005: 'Urls max count is 10',                                         
-		84006: 'Urls format invalid',                                           
-		84007: 'Urls host not exist',                                           
-		84008: 'Type invalid',
-		85001: 'Require domain',
-		85002: 'This domain do not belong to you.',
+        81001: 'Please add default isp line first.',
+        81002: 'The same sub-domain can only add five single isp line records.',
+        81003: 'System Error, Please try again.',
+        81004: 'Site invalid.',
+        81005: 'Dns invalid.',
+        81006: 'IP invalid.',
+        81007: 'Site has no ICP.',
+        81008: 'Dns duplicated.',
+        81009: 'Host invalid.',
+        82001: 'Invalid isp code.',
+        82002: 'Requires valid domain.',
+        82003: 'No such host.',
+        82004: 'No such isp.',
+        82005: 'Dns invalid.',
+        82006: 'Please delete other isp line record first,then delete default isp line.',
+        83001: 'No site found under current conditions.',
+        84001: 'Requires domain.',
+        84002: 'Requires urls',
+        84003: 'Requires type',
+        84004: 'No such domain.',
+        84005: 'Urls max count is 10',
+        84006: 'Urls format invalid',
+        84007: 'Urls host not exist',
+        84008: 'Type invalid',
+        85001: 'Require domain',
+        85002: 'This domain do not belong to you.',
 
         86001: 'No site found under current conditions.',
         86002: "Malformed or invalid parameters",
@@ -153,7 +153,7 @@ ERROR_CODE = {
 * use_cdn
   * false，不使用cdn
   * true, 使用cdn
-* cdn.waf 
+* cdn.waf
   * 是否开启waf，true/false
 * cdn.static
   * 是否开启静态资源缓存，true/false
@@ -178,7 +178,7 @@ ERROR_CODE = {
 		'code' : 0,
 		'msg' : 'added',
 		'ret' : {
-			'id' : '4efdf26715303446a6000001',	
+			'id' : '4efdf26715303446a6000001',
 			'site' : 'www.notsobad.me',
 			'cname' : '28d4198464a841e6.cdn.jiashule.com',
 			'isp' : 0,
@@ -195,7 +195,7 @@ ERROR_CODE = {
 请求参数说明：
 
 * domain
-  * 根域	
+  * 根域
 * host（可选）
   * 待删除的子域名
 * isp（可选）
@@ -214,7 +214,7 @@ ERROR_CODE = {
 	domain=notsobad.me&host=www&isp=0&time=1386904356
 
 响应数据样例
-```javascript	
+```javascript
 	{
 		"code" : 0,
 		"status" : "ok",
@@ -236,7 +236,7 @@ ERROR_CODE = {
 * pagesize (可选)
   * 分页条数
   * 默认查询所有
-    请求样例: 
+    请求样例:
 
 * `/api/v2/site/list/`
 * `/api/v2/site/list/?domain=notsobad.me`
@@ -274,7 +274,7 @@ ERROR_CODE = {
 				'cdn.index' : false,
 				'cdn.directory' : false
 			}
-		] 
+		]
 	}
 ```
 
@@ -292,41 +292,41 @@ ERROR_CODE = {
 
 
 请求数据样例
-​	
+​
 	domain=notsobad.me&type=url&urls=http%3A%2F%2Fwww.notsobad.me%0Ahttp%3A%2F%2Fbbs.notsobad.me%2F%3Fa%3D1
 	domain=notsobad.me&type=host&urls=http%3A%2F%2Fwww.notsobad.me%0Ahttp%3A%2F%2bbs.notsobad.me
 
 响应数据样例
-```javascript	
+```javascript
 	{
 		"code" : 0,
 		"msg" : "ok"
 	}
 ```
 
-## 查看报表                                                                     
-* api地址: `/api/v2/site/report/`                                                     
-* method : `post`                                                                  
+## 查看报表
+* api地址: `/api/v2/site/report/`
+* method : `post`
 * data : json格式数据
 
-​请求参数：                                                                                   
+​请求参数：
 
-* domain (根域名)                                                                  
+* domain (根域名)
 * time
 
 请求数据样例
-  domain=notsobad.me&time=1386904356                                             
+  domain=notsobad.me&time=1386904356
 
-响应数据样例                                                                       
-```javascript                                                                      
-    {                                                                              
-        "status": "ok",                                                            
-        "code": 0,                                                                 
-        'msg' : 'report',                                                          
-        'ret' : {                                                                  
+响应数据样例
+```javascript
+    {
+        "status": "ok",
+        "code": 0,
+        'msg' : 'report',
+        'ret' : {
             "url": "https://www.yunaq.com/analytics/summary_report/?filter_site=notsobad.me&rd=l4udBU7ZNPeRo1bGhSYXLzv30CJHgw6D&ts=1447931428&sig=a6872eec8aafec2d695821401ffb89a59fd57ca3"
-        }                                                                       
-    }                                                                              
+        }
+    }
 ```
 
 ## 获取日志下载链接
@@ -335,12 +335,12 @@ ERROR_CODE = {
 * method：`post`
 * data：json格式数据
 * 其他说明：日志下载支持以天为单位的日志和以小时为单位日志的下载。
-    * 以天为单位：支持最近7天（不包括请求当天）的日志。 如请求时间是2017-02-16，则可获取2017-02-09 至 2017-02-15这7天的日志
-    * 以小时为单位：支持26小时前至2小时前的日志。如请求时间是2017-02-16 14:02:00，则可获取2017-02-15 12 至 2017-02-16 12这24个小时的日志
+    * 以天为单位：支持最近7天（不包括请求当天）的日志。 如当前时间为2017-02-16，可下载日志的时间范围为2017-02-09 至 2017-02-15。
+    * 以小时为单位：支持26小时前至2小时前的日志。如当前时间为2017-02-16 14:02:00，可下载日志的时间范围为2017-02-15 12:00 至 2017-02-16 12:00。
 
 请求参数：
 * log_type：必填参数，表示日志类型。支持参数列表：attack, access。
-* date：必填，表示日志时间段。每日
+* date：必填，表示日志时间段。（如填写20170215表示请求2017-02-15当天的日志，填写2017021512表示请求2017-02-15 12:00的日志）
 * domain：必填。表示根域名。
 * time
 
