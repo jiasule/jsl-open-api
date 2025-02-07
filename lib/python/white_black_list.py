@@ -73,7 +73,11 @@ def white_black_list_set(domain=None, host=None, keyword=None, values=None):
     :param domain: 域名
     :param host: 主机名
     :param keyword: 需要设置的类型，可选值: ip_blacklist(ipv4黑名单)/ip_whitelist(ipv4白名单)/ipv6_blacklist(ipv6黑名单)/ipv6_whitelist(ipv6白名单)/url_blacklist(URL黑名单)/url_whitelist(URL白名单)
-    :param values: 需要设置的值，格式: [['1.1.1.1', '黑名单1'], ['1.1.1.2', '黑名单2']], 具体可参考main函数中的测试数据
+    :param values: 需要设置的值，格式: 
+    {
+        "add": [["1.1.1.100", ""], ['1.1.1.100-1.1.1.200', '']],
+        "del": ["1.1.1.10-1.1.1.20"],
+    }, 具体可参考main函数中的测试数据
     """
     url = YUNAQ_DOMAIN + API_PATH_SET
     params = {
