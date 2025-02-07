@@ -67,19 +67,19 @@ def get_headers(params):
     headers.update(get_basic_auth_header(API_USER, signature))
     return headers
 
-def white_black_list_set(sid=None, id=None, keyword=None, values=None):
+def white_black_list_set(domain=None, host=None, keyword=None, values=None):
     """
     设置黑白名单
-    :param sid: 域名ID(从查询接口获取)
-    :param id: 子域名ID(从查询接口获取)
+    :param domain: 域名
+    :param host: 主机名
     :param keyword: 需要设置的类型，可选值: ip_blacklist(ipv4黑名单)/ip_whitelist(ipv4白名单)/ipv6_blacklist(ipv6黑名单)/ipv6_whitelist(ipv6白名单)/url_blacklist(URL黑名单)/url_whitelist(URL白名单)
     :param values: 需要设置的值，格式: [['1.1.1.1', '黑名单1'], ['1.1.1.2', '黑名单2']], 具体可参考main函数中的测试数据
     """
     url = YUNAQ_DOMAIN + API_PATH_SET
     params = {
         'time': int(time.time()),
-        'sid': sid,
-        'id': id,
+        'domain': domain,
+        'host': host,
         'keyword': keyword,
         'values': json.dumps(values)
     }
@@ -126,40 +126,161 @@ def white_black_list_get(domain=None, host=None):
 
 
 if __name__ == '__main__':
+    domain = 'testcom.cn'
+    host = 'test1'
     # 黑白名单查询
-    # 返回结果示例子：{'code': 0, 'data': {'id': '6556d98d8c7f35000fc4b7b9', 'ip_blacklist': [], 'ip_whitelist': [['10.1.1.1', '']], 'ipv6_blacklist': [], 'ipv6_whitelist': [], 'sid': '6475918a39630f00292a6a15', 'url_blacklist': [], 'url_whitelist': []}, 'status': 'success'}
-    data = white_black_list_get('example.com', 'www')
-    id = data['data']['id']
-    sid = data['data']['sid']
+    data = white_black_list_get(domain, host)
+    """
+    查询结果示例
+        {
+            'code': 0,
+            'data': {
+                'domain': 'testcom.cn',
+                'host': 'test1',
+                'ip_blacklist': [
+                    ['1.1.1.2', '黑名单2'],
+                    ['1.1.1.22-1.1.1.25', '黑名单3']
+                ],
+                'ip_whitelist': [
+                    ['1.1.1.2', '黑名单2'],
+                    ['1.1.1.22-1.1.1.25', '黑名单3']
+                ],
+                'ipv6_blacklist': [
+                    ['2001:db8::2', '黑名单2'],
+                    ['2001:db8::10-2001:db8::20', '黑名单3']
+                ],
+                'ipv6_whitelist': [
+                    ['2001:db8::2', '黑名单2'],
+                    ['2001:db8::10-2001:db8::20', '黑名单3']
+                ],
+                'url_blacklist': [
+                    ['www.example2.com', '测试2'],
+                    ['www.example3.com', '测试3', [80]]
+                ],
+                'url_blackwhitelist_nocase': 1,
+                'url_whitelist': [
+                    ['www.example2.com', '测试2'],
+                    ['www.example3.com', '测试3', [80]]
+                ]
+            },
+            'status': 'success'
+        }
+    """
+
+    # ipv4黑名单设置 - 新增
+    ip_blacklist = {
+        "add": [["1.1.1.1", "黑名单1"], ['1.1.1.10-1.1.1.20', '黑名单2']],
+    }
+    white_black_list_set(domain=domain, host=host, keyword='ip_blacklist', values=ip_blacklist)
     
-    # ipv4黑名单设置
-    ip_blacklist = [['1.1.1.1-1.1.1.24', '黑名单1'],['1.1.1.2', '黑名单2']]
-    white_black_list_set(sid=sid, id=id, keyword='ip_blacklist', values=ip_blacklist)
+    # ipv4黑名单设置 - 删除
+    ip_blacklist = {
+        "del": ["1.1.1.1"],
+    }
+    white_black_list_set(domain=domain, host=host, keyword='ip_blacklist', values=ip_blacklist)
     
-    # ipv4白名单设置
-    ip_whitelist = [['2.2.2.1', '白名单1'],['2.2.2.2', '白名单2']]
-    white_black_list_set(sid=sid, id=id, keyword='ip_whitelist', values=ip_whitelist)
+    # ipv4黑名单设置 - 新增 + 删除
+    ip_blacklist = {
+        "add": [["1.1.1.100", ""], ['1.1.1.100-1.1.1.200', '']],
+        "del": ["1.1.1.10-1.1.1.20"],
+    }
+    white_black_list_set(domain=domain, host=host, keyword='ip_blacklist', values=ip_blacklist)
+
+    # ipv4白名单设置 - 新增
+    ip_whitelist = {
+        "add": [["2.2.2.2", "白名单1"], ['2.2.2.20-2.2.2.30', '白名单2']],
+    }
+    white_black_list_set(domain=domain, host=host, keyword='ip_whitelist', values=ip_whitelist)
     
-    # ipv6黑名单设置
-    ipv6_blacklist = [['1000::1-1000::3', 'IPv6黑名单1'],['1000::20', 'IPv6黑名单2']]
-    white_black_list_set(sid=sid, id=id, keyword='ipv6_blacklist', values=ipv6_blacklist)
+    # ipv4白名单设置 - 删除
+    ip_whitelist = {
+        "del": ["2.2.2.2"],
+    }
+    white_black_list_set(domain=domain, host=host, keyword='ip_whitelist', values=ip_whitelist)
     
-    # ipv6白名单设置
-    ipv6_whitelist = [['2000::1', 'IPv6白名单1'],['2000::2', 'IPv6白名单2']]
-    white_black_list_set(sid=sid, id=id, keyword='ipv6_whitelist', values=ipv6_whitelist)
+    # ipv4白名单设置 - 新增 + 删除
+    ip_whitelist = {
+        "add": [["2.2.2.200", ""], ['2.2.2.200-2.2.2.220', '']],
+        "del": ["2.2.2.20-2.2.2.30"],
+    }
+    white_black_list_set(domain=domain, host=host, keyword='ip_whitelist', values=ip_whitelist)
     
-    # url黑名单设置
+    # ipv6黑名单设置 - 新增
+    ipv6_blacklist = {
+        "add": [["1000::1", "IPv6黑名单1"], ['1000::10-1000::30', 'IPv6黑名单2']],
+    }
+    white_black_list_set(domain=domain, host=host, keyword='ipv6_blacklist', values=ipv6_blacklist)
+    
+    # ipv6黑名单设置 - 删除
+    ipv6_blacklist = {
+        "del": ["1000::1"],
+    }
+    white_black_list_set(domain=domain, host=host, keyword='ipv6_blacklist', values=ipv6_blacklist)
+    
+    # ipv6黑名单设置 - 新增 + 删除
+    ipv6_blacklist = {
+        "add": [["1000::100", ""], ['1000::100-1000::200', '']],
+        "del": ["1000::10-1000::30"],
+    }
+    white_black_list_set(domain=domain, host=host, keyword='ipv6_blacklist', values=ipv6_blacklist)
+
+    # ipv6白名单设置 - 新增
+    ipv6_whitelist = {
+        "add": [["2000::1", "IPv6白名单1"], ['2000::20-2000::30', 'IPv6白名单2']],
+    }
+    white_black_list_set(domain=domain, host=host, keyword='ipv6_whitelist', values=ipv6_whitelist)
+    
+    # ipv6白名单设置 - 删除
+    ipv6_whitelist = {
+        "del": ["2000::1"],
+    }
+    white_black_list_set(domain=domain, host=host, keyword='ipv6_whitelist', values=ipv6_whitelist)
+    
+    # ipv6白名单设置 - 新增 + 删除
+    ipv6_whitelist = {
+        "add": [["2000::100", ""], ['2000::100-2000::200', '']],
+        "del": ["2000::20-2000::30"],
+    }
+    white_black_list_set(domain=domain, host=host, keyword='ipv6_whitelist', values=ipv6_whitelist)
+    
+    # url黑名单设置 - 新增
     # 格式：['URL', '备注', [端口]]，多个端口以','分开
     # 例如，全部端口： ['www1', 'URL黑名单1']，指定端口： ['www2', 'URL黑名单2', [8080,8090]]
-    url_blacklist = [['www1', 'URL黑名单1'],['www2', 'URL黑名单2', [80]]]
-    # 如需忽略url大小写，则需要设置url_blackwhitelist_nocase为1
-    # url_blacklist =  {
-    #     "values": [["www3", "URL黑名单3"], ["www4", "URL黑名单4", [80]]], 
-    #     "url_blackwhitelist_nocase": 1
-    # 
-    white_black_list_set(sid=sid, id=id, keyword='url_blacklist', values=url_blacklist)
+    # 如需忽略URL大小写，设置url_blackwhitelist_nocase为1
+    url_blacklist = {
+        "add": [['www1', 'URL黑名单1'], ['www2', 'URL黑名单2', [80]]],
+        "url_blackwhitelist_nocase": 1
+    }
+    white_black_list_set(domain=domain, host=host, keyword='url_blacklist', values=url_blacklist)
     
-    # url白名单设置
-    url_whitelist = [['www1', 'URL白名单1'],['www2', 'URL白名单2', [80]]]
-    white_black_list_set(sid=sid, id=id, keyword='url_whitelist', values=url_whitelist)
+    # url黑名单设置 - 删除
+    url_blacklist = {
+        "del": ["www1"],
+    }
+    white_black_list_set(domain=domain, host=host, keyword='url_blacklist', values=url_blacklist)
+
+    # url黑名单设置 - 新增 + 删除
+    url_blacklist = {
+        "add": [['www3', 'URL黑名单3'], ['www4', 'URL黑名单4', [80]]],
+        "del": ["www2"],
+    }
+    white_black_list_set(domain=domain, host=host, keyword='url_blacklist', values=url_blacklist)
+
+    # url白名单设置 - 新增
+    url_whitelist = {
+        "add": [['www1', 'URL白名单1'], ['www2', 'URL白名单2', [80]]],
+    }
+    white_black_list_set(domain=domain, host=host, keyword='url_whitelist', values=url_whitelist)
+
+    # url白名单设置 - 删除  
+    url_whitelist = {
+        "del": ["www1"],
+    }
+    white_black_list_set(domain=domain, host=host, keyword='url_whitelist', values=url_whitelist)
     
+    # url白名单设置 - 新增 + 删除
+    url_whitelist = {
+        "add": [['www3', 'URL白名单3'], ['www4', 'URL白名单4', [80]]],
+        "del": ["www2"],
+    }
+    white_black_list_set(domain=domain, host=host, keyword='url_whitelist', values=url_whitelist)
