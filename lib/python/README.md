@@ -7,6 +7,7 @@
 | URL缓存刷新      | url_flush.py     |
 | 缓存预热     | heat_flush.py    |
 | 日志下载     | log_download.py  |
+| 黑白名单     | white_black_list.py |
 
 ### 支持的 Python 版本
 - python3
